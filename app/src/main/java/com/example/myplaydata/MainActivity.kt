@@ -3,6 +3,7 @@ package com.example.myplaydata
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.Center
 import androidx.compose.foundation.layout.Arrangement.Absolute.SpaceAround
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -37,7 +39,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -82,6 +86,15 @@ fun TampilLayout(
         ) {
             TampilForm()
         }
+    }
+}
+
+@Composable
+fun header(){
+    Card (){
+        Image(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = "", modifier = Modifier.size(10.dp))
+        Spacer(modifier = Modifier.padding(3.dp))
+        Text(text = "Yogyakarta", fontSize = 15.sp, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -155,11 +168,11 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
             fontSize = 16.sp
         )
     }
-    Spacer(modifier = Modifier.height(100.dp))
+    Spacer(modifier = Modifier.height(20.dp))
     TextHasil(
         jenisnya = cobViewModel.jenisKl,
         statusnya = cobViewModel.stattST,
-        namanya = cobViewModel.namaUsr,
+        emailnya = cobViewModel.namaEml,
         telponnya = cobViewModel.noTlp,
         alamatnya = cobViewModel.alamatUsr,
 
@@ -171,7 +184,9 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
 fun SelectJK(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column( verticalArrangement = Arrangement.SpaceEvenly,modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+    Column( verticalArrangement = Arrangement.SpaceEvenly,modifier = Modifier
+        .padding(5.dp)
+        .fillMaxWidth()) {
         Text(text = "Jenis Kelamin: ")
             Row(
                 modifier = Modifier.padding(6.dp))
@@ -200,7 +215,9 @@ fun SelectJK(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
 fun SelectST(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column( verticalArrangement = Arrangement.SpaceEvenly,modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+    Column( verticalArrangement = Arrangement.SpaceEvenly,modifier = Modifier
+        .padding(5.dp)
+        .fillMaxWidth()) {
         Text(text = "Status: ")
         Row(
             modifier = Modifier.padding(6.dp))
@@ -227,7 +244,7 @@ fun SelectST(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
 
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: String, statusnya: String,) {
+fun TextHasil(emailnya: String, telponnya: String, jenisnya: String, alamatnya: String, statusnya: String,) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = Modifier.fillMaxWidth()
@@ -246,7 +263,7 @@ fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: S
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Username : " + namanya,
+            text = "Email : " + emailnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(

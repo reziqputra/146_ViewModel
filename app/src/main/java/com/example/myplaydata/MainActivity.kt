@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Absolute.Center
+import androidx.compose.foundation.layout.Arrangement.Absolute.SpaceAround
+import androidx.compose.foundation.layout.Arrangement.Absolute.SpaceEvenly
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,6 +48,7 @@ import com.example.myplaydata.data.DataSource.jenis
 import com.example.myplaydata.data.DataSource.statt
 import com.example.myplaydata.ui.theme.CobViewModel
 import com.example.myplaydata.ui.theme.MyPlayDataTheme
+import org.w3c.dom.Text
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -154,6 +158,7 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
     Spacer(modifier = Modifier.height(100.dp))
     TextHasil(
         jenisnya = cobViewModel.jenisKl,
+        statusnya = cobViewModel.stattST,
         namanya = cobViewModel.namaUsr,
         telponnya = cobViewModel.noTlp,
         alamatnya = cobViewModel.alamatUsr,
@@ -166,23 +171,26 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
 fun SelectJK(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        option.forEach { item ->
+    Column( verticalArrangement = Arrangement.SpaceEvenly,modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+        Text(text = "Jenis Kelamin: ")
             Row(
-                modifier = Modifier.selectable(
+                modifier = Modifier.padding(6.dp))
+            {
+                     option.forEach { item ->
+                Row (modifier = Modifier.selectable(
                     selected = selectedValue == item,
                     onClick = {
                         selectedValue = item
                         onSelectionChanged(item)
-                    }),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectionChanged(item)
-                    })
-                Text(item)
+                    }),verticalAlignment = Alignment.CenterVertically){
+
+                    RadioButton(selected = selectedValue == item,
+                        onClick = {
+                            selectedValue = item
+                            onSelectionChanged(item)
+                        })
+                    Text(item)
+                }
             }
         }
     }
@@ -192,23 +200,26 @@ fun SelectJK(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
 fun SelectST(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column(modifier = Modifier.padding(16.dp)) {
-        option.forEach { item ->
-            Row(
-                modifier = Modifier.selectable(
+    Column( verticalArrangement = Arrangement.SpaceEvenly,modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+        Text(text = "Status: ")
+        Row(
+            modifier = Modifier.padding(6.dp))
+        {
+            option.forEach { item ->
+                Row (modifier = Modifier.selectable(
                     selected = selectedValue == item,
                     onClick = {
                         selectedValue = item
                         onSelectionChanged(item)
-                    }),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                RadioButton(selected = selectedValue == item,
-                    onClick = {
-                        selectedValue = item
-                        onSelectionChanged(item)
-                    })
-                Text(item)
+                    }),verticalAlignment = Alignment.CenterVertically){
+
+                    RadioButton(selected = selectedValue == item,
+                        onClick = {
+                            selectedValue = item
+                            onSelectionChanged(item)
+                        })
+                    Text(item)
+                }
             }
         }
     }
@@ -216,18 +227,18 @@ fun SelectST(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
 
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: String) {
+fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: String, statusnya: String,) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = Modifier.fillMaxWidth()
     )
     {
         Text(
-            text = "Nama : " + namanya,
+            text = "Jenis Kelamin : " + jenisnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Telpon : " + telponnya,
+            text = "Status : " + statusnya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
@@ -235,9 +246,16 @@ fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: S
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(
-            text = "Jenis Kelamin : " + jenisnya,
+            text = "Username : " + namanya,
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
         )
+        Text(
+            text = "Telpon : " + telponnya,
+            modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+
+
+
     }
 }
 

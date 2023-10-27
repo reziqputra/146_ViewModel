@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -75,6 +76,7 @@ class MainActivity : ComponentActivity() {
 fun TampilLayout(
     modifier: Modifier = Modifier
 ){
+
     Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
@@ -91,10 +93,16 @@ fun TampilLayout(
 
 @Composable
 fun header(){
-    Card (){
-        Image(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = "", modifier = Modifier.size(10.dp))
-        Spacer(modifier = Modifier.padding(3.dp))
-        Text(text = "Yogyakarta", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+    Column (horizontalAlignment = Alignment.CenterHorizontally){
+        ElevatedCard (elevation = CardDefaults.cardElevation(defaultElevation = 2.dp), modifier = Modifier.fillMaxWidth()){
+            Row (modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp), verticalAlignment = Alignment.CenterVertically){
+                Image(painter = painterResource(id = R.drawable.baseline_arrow_back_24), contentDescription = "", modifier = Modifier.size(25.dp))
+                Spacer(modifier = Modifier.width(110.dp))
+                Text(text = "Register", fontSize = 25.sp, fontWeight = FontWeight.Bold)
+            }
+        }
     }
 }
 
@@ -110,6 +118,8 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
     val dataForm: DataForm
     val uiState by cobViewModel.uiState.collectAsState()
     dataForm = uiState
+
+    header()
 
     OutlinedTextField(value = textNama,
         singleLine = true,

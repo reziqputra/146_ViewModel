@@ -171,7 +171,7 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
         })
     Button(
         modifier = Modifier.fillMaxWidth(),
-        onClick = { cobViewModel.insertData(textNama, textTlp,textEml,dataForm.sex,dataForm.stat,textAlm) })
+        onClick = { cobViewModel.insertData(textNama, textTlp,textAlm,textEml,dataForm.sex,dataForm.stat,) })
     {
         Text(
             text = stringResource(R.string.submit),
@@ -199,7 +199,7 @@ fun SelectJK(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
         .fillMaxWidth()) {
         Text(text = "Jenis Kelamin: ")
             Row(
-                modifier = Modifier.padding(6.dp))
+                modifier = Modifier.padding(3.dp))
             {
                      option.forEach { item ->
                 Row (modifier = Modifier.selectable(
@@ -230,7 +230,7 @@ fun SelectST(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
         .fillMaxWidth()) {
         Text(text = "Status: ")
         Row(
-            modifier = Modifier.padding(6.dp))
+            modifier = Modifier.padding(3.dp))
         {
             option.forEach { item ->
                 Row (modifier = Modifier.selectable(

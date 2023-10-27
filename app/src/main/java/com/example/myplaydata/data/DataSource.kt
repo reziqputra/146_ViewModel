@@ -7,4 +7,8 @@ object DataSource {
         R.string.laki,
         R.string.wanita,
     )
+    val statt = listOf(
+        R.string.mm,
+        R.string.bm,
+    )
 }

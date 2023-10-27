@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myplaydata.data.DataForm
 import com.example.myplaydata.data.DataSource.jenis
+import com.example.myplaydata.data.DataSource.statt
 import com.example.myplaydata.ui.theme.CobViewModel
 import com.example.myplaydata.ui.theme.MyPlayDataTheme
 
@@ -86,6 +87,7 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
     var textAlm by remember { mutableStateOf("") }
+    var textEml by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     val dataForm: DataForm
@@ -96,17 +98,9 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nama Lengkap") },
+        label = { Text(text = "UserName") },
         onValueChange = {
             textNama = it
-        })
-    OutlinedTextField(value = textAlm,
-        singleLine = true,
-        shape = MaterialTheme.shapes.large,
-        modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Alamat") },
-        onValueChange = {
-            textAlm = it
         })
 
     OutlinedTextField(
@@ -120,12 +114,37 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
             textTlp = it
         }
     )
+    OutlinedTextField(
+        value = textEml,
+        singleLine  = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email") },
+        onValueChange = {
+            textEml = it
+        }
+    )
+
+
+
+
     SelectJK(
         option = jenis.map { id -> context.resources.getString(id) },
         onSelectionChanged = { cobViewModel.setJenis(it) })
+    SelectST(option = statt.map { ib -> context.resources.getString(ib) },
+        onSelectionChanged = { cobViewModel.setStatus(it) })
+
+    OutlinedTextField(value = textAlm,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Alamat") },
+        onValueChange = {
+            textAlm = it
+        })
     Button(
         modifier = Modifier.fillMaxWidth(),
-        onClick = { cobViewModel.insertData(textNama, textTlp,textAlm,dataForm.sex) })
+        onClick = { cobViewModel.insertData(textNama, textTlp,textEml,dataForm.sex,dataForm.stat,textAlm) })
     {
         Text(
             text = stringResource(R.string.submit),
@@ -134,10 +153,11 @@ fun TampilForm(cobViewModel: CobViewModel = viewModel()) {
     }
     Spacer(modifier = Modifier.height(100.dp))
     TextHasil(
+        jenisnya = cobViewModel.jenisKl,
         namanya = cobViewModel.namaUsr,
         telponnya = cobViewModel.noTlp,
         alamatnya = cobViewModel.alamatUsr,
-        jenisnya = cobViewModel.jenisKl,
+
 
     )
 }
@@ -167,6 +187,33 @@ fun SelectJK(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
         }
     }
 }
+
+@Composable
+fun SelectST(option: List<String>, onSelectionChanged: (String) -> Unit = {}) {
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        option.forEach { item ->
+            Row(
+                modifier = Modifier.selectable(
+                    selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                RadioButton(selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    })
+                Text(item)
+            }
+        }
+    }
+}
+
 
 @Composable
 fun TextHasil(namanya: String, telponnya: String, jenisnya: String, alamatnya: String) {

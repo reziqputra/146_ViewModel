@@ -17,18 +17,28 @@ class CobViewModel : ViewModel() {
         private set
     var noTlp: String by mutableStateOf("")
         private set
+    var namaEml: String by mutableStateOf("")
+        private set
     var jenisKl: String by mutableStateOf("")
+        private set
+    var stattST: String by mutableStateOf("")
         private set
     private val _uiState = MutableStateFlow(DataForm())
     val uiState: StateFlow<DataForm> = _uiState.asStateFlow()
 
-    fun insertData(nm: String, tlp: String,alm: String , jk: String){
+    fun insertData(nm: String, tlp: String,alm: String ,eml: String, jk: String, st: String){
         namaUsr = nm;
         alamatUsr = alm;
         noTlp = tlp;
+        namaEml = eml;
         jenisKl = jk;
+        stattST = st;
     }
     fun setJenis(pilihJK: String){
         _uiState.update { currentState -> currentState.copy(sex = pilihJK) }
+    }
+
+    fun setStatus(pilihStatus: String){
+        _uiState.update { currentState -> currentState.copy(stat = pilihStatus) }
     }
 }
